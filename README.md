@@ -1,21 +1,23 @@
-# 🌐 Análise de Conectividade de Rede: Diagnóstico DNS e ICMP
+# 🌐 Investigação de Rede: Falha de Conectividade DNS e ICMP
 
-## 📝 Visão Geral
-Este projeto foca na investigação de um incidente onde usuários não conseguiam aceder ao site `yummyrecipesforme.com`. Através da análise de logs de tráfego, identifiquei uma falha crítica na comunicação com o servidor DNS.
+## 📝 Visão Geral do Incidente
+[cite_start]Este projeto documenta a análise de um incidente técnico iniciado às **13:24:32**, onde usuários não conseguiam acessar o site `yummyrecipesforme.com`[cite: 42]. O objetivo foi identificar por que a comunicação entre o navegador e o servidor estava sendo interrompida.
 
-## 🔍 Descobertas Principais (Análise de Logs)
-* [cite_start]**Protocolo UDP:** Identificado na tentativa de contacto com o servidor DNS (IP `203.0.113.2`) na **Porta 53**.
-* [cite_start]**Erro ICMP:** Os logs revelaram a mensagem `udp port 53 unreachable`, indicando que o serviço de DNS não estava a aceitar conexões.
-* [cite_start]**Sintoma Técnico:** O navegador não conseguia converter o nome do domínio em um endereço IP, resultando em erro de carregamento para os clientes.
+## 🔍 Análise Técnica dos Logs
+Através da análise de pacotes (packet sniffing) com o `tcpdump`, foram identificados os seguintes pontos críticos:
 
-## 🛠️ Ferramentas e Metodologia
-* [cite_start]**Packet Sniffing:** Utilização do `tcpdump` para capturar e analisar pacotes em tempo real[cite: 42].
-* [cite_start]**Análise de Timestamp:** O incidente foi mapeado com início às **13:24:32**, conforme registado nos logs[cite: 42].
-* [cite_start]**Diagnóstico de Causa Raiz:** Suspeita de ataque de **Negação de Serviço (DoS)** ou erro de configuração de firewall bloqueando a porta 53[cite: 42].
+* [cite_start]**Protocolo UDP:** Utilizado na tentativa de contato com o servidor DNS (IP `203.0.113.2`) na **Porta 53**.
+* [cite_start]**Erro ICMP:** O log revelou a mensagem `udp port 53 unreachable`, confirmando que o serviço de DNS não estava aceitando conexões[cite: 40, 42].
+* [cite_start]**Sintoma:** O navegador falhou ao transformar o nome do site em um endereço IP, impossibilitando o carregamento da página.
 
-## 🛡️ Próximas Etapas Recomendadas
-1. [cite_start]Verificar a disponibilidade do serviço de DNS no servidor de destino[cite: 42].
-2. [cite_start]Auditar as regras de firewall para garantir que o tráfego na porta 53 (UDP) não esteja a ser bloqueado indevidamente[cite: 42].
+## 🛠️ Metodologia de Investigação
+1. [cite_start]**Captura de Dados:** Uso do `tcpdump` para isolar o tráfego de saída e resposta[cite: 42].
+2. [cite_start]**Identificação de Erros:** Mapeamento de mensagens ICMP de "destino inalcançável".
+3. [cite_start]**Causa Provável:** Suspeita de ataque de **Negação de Serviço (DoS)** ou erro crítico de configuração no firewall bloqueando a porta 53[cite: 42].
 
-## 📂 Arquivos do Projeto
-* [📄 Relatório de Análise DNS/ICMP (PDF)](./analise-dns-icmp.pdf)
+## 🛡️ Próximas Etapas e Remediação
+* [cite_start]Verificar se o serviço de DNS no servidor de destino está ativo[cite: 42].
+* [cite_start]Auditar as regras de firewall para permitir tráfego legítimo na porta 53[cite: 42].
+
+## 📂 Arquivos
+* [📄 Relatório Técnico de Conectividade (PDF)](./analise-dns-icmp.pdf)
